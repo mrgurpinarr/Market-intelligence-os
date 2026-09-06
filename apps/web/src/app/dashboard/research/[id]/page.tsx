@@ -32,7 +32,7 @@ import {
   Database,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { downloadNativePDF } from '@/lib/native-pdf';
+import { downloadInstitutionalPDF } from '@/lib/native-pdf';
 
 export default function InteractiveReportViewer() {
   const params = useParams();
@@ -72,7 +72,7 @@ export default function InteractiveReportViewer() {
     if (!report) return;
     setExporting(true);
     try {
-      await downloadNativePDF(report);
+      await downloadInstitutionalPDF(report);
     } catch (err) {
       console.error('PDF Export Error:', err);
     } finally {
