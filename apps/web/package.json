@@ -12,6 +12,7 @@
     "@market-intel/agents": "workspace:*",
     "@market-intel/core": "workspace:*",
     "@market-intel/tools": "workspace:*",
+    "@react-pdf/renderer": "^4.9.0",
     "@types/jspdf": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
