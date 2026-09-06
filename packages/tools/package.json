@@ -1,0 +1,26 @@
+{
+  "name": "@market-intel/tools",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@market-intel/core": "workspace:*",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.7",
+    "pg": "^8.13.1",
+    "pgvector": "^0.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "@types/pg": "^8.11.11",
+    "typescript": "^5.7.3"
+  }
+}

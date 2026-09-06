@@ -1,0 +1,17 @@
+{
+  "name": "market-intelligence",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "pnpm -r --parallel run dev",
+    "test": "pnpm -r run test",
+    "typecheck": "pnpm -r run typecheck",
+    "clean": "pnpm -r run clean"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@9.15.4"
+}
