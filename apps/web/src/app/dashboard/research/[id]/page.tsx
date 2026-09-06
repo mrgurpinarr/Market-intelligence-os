@@ -297,7 +297,7 @@ export default function InteractiveReportViewer() {
               <CardHeader className="p-5 border-b flex-row items-center gap-2">
                 <Scale className="h-4 w-4 text-primary" />
                 <CardTitle className="text-base font-semibold">
-                  6. Chief Critic Sentezi & Çelişki Denetimi
+                  6. Chief Critic Synthesis & Validation Audit
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-5 text-sm text-foreground/90 leading-relaxed">
@@ -310,7 +310,7 @@ export default function InteractiveReportViewer() {
               <CardHeader className="p-5 border-b flex-row items-center gap-2">
                 <Lightbulb className="h-4 w-4 text-amber-400" />
                 <CardTitle className="text-base font-semibold">
-                  7. Stratejik Eylem Önerileri
+                  7. Strategic Action Recommendations
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-5 space-y-2.5">
@@ -327,7 +327,7 @@ export default function InteractiveReportViewer() {
             <Card id="sources" className="border bg-card/60">
               <CardHeader className="p-5 border-b">
                 <CardTitle className="text-base font-semibold">
-                  8. Doğrulanmış Kaynaklar & Kanıt Listesi
+                  8. Verified Sources & Evidence Citations
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-5 space-y-3">

@@ -12,6 +12,7 @@ import {
   LogIn,
   LogOut,
   User,
+  Database,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -21,6 +22,7 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Asset Analysis', href: '/dashboard/assets/BTC', icon: TrendingUp },
   { name: 'Research Terminal', href: '/dashboard/research', icon: FileText },
+  { name: 'RAG Knowledge Vault', href: '/dashboard/knowledge', icon: Database },
 ];
 
 export function Header() {
