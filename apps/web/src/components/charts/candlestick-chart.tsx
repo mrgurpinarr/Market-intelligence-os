@@ -36,20 +36,20 @@ export function FinancialCandlestickChart({
 
   const candleData = React.useMemo<CandlestickPoint[]>(() => {
     const points: CandlestickPoint[] = [];
-    const count = timeframe === '1D' ? 24 : timeframe === '7D' ? 35 : 60;
-    const now = Date.now();
-    const intervalMs =
+    const count = timeframe === '1D' ? 24 : timeframe === '7D' ? 42 : 60;
+    const now = Math.floor(Date.now() / 1000);
+    const intervalSec =
       timeframe === '1D'
-        ? 3600 * 1000
+        ? 3600
         : timeframe === '7D'
-        ? 4 * 3600 * 1000
-        : 24 * 3600 * 1000;
+        ? 4 * 3600
+        : 24 * 3600;
 
     let basePrice = currentPrice * (1 - (change24h / 100) * 0.8);
     const volatility = currentPrice * 0.012;
 
     for (let i = count; i >= 0; i--) {
-      const timeStr = new Date(now - i * intervalMs).toISOString().split('T')[0];
+      const timeSec = now - i * intervalSec;
       const open = basePrice;
       const variation = (Math.random() - 0.48) * volatility;
       const close = open + variation;
@@ -58,7 +58,7 @@ export function FinancialCandlestickChart({
       const volume = Math.floor(Math.random() * 50000 + 10000);
 
       points.push({
-        time: timeStr,
+        time: timeSec as any,
         open,
         high,
         low,

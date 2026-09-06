@@ -15,8 +15,11 @@ import {
   ArrowRight,
   ShieldCheck,
   Search,
+  Mic,
+  MicOff,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 export function StartResearchModal({
   open,
@@ -28,11 +31,59 @@ export function StartResearchModal({
   onReportCreated?: () => void;
 }) {
   const [query, setQuery] = React.useState('');
+  const [isListening, setIsListening] = React.useState(false);
   const [isRunning, setIsRunning] = React.useState(false);
   const [currentStep, setCurrentStep] = React.useState('');
   const [stepLogs, setStepLogs] = React.useState<string[]>([]);
   const [progressPercent, setProgressPercent] = React.useState(0);
   const router = useRouter();
+
+  const recognitionRef = React.useRef<any>(null);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const SpeechRecognition =
+        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = () => setIsListening(true);
+        recognition.onend = () => setIsListening(false);
+        recognition.onerror = (event: any) => {
+          console.error('Speech recognition error:', event.error);
+          setIsListening(false);
+        };
+        recognition.onresult = (event: any) => {
+          const transcript = Array.from(event.results)
+            .map((result: any) => result[0].transcript)
+            .join('');
+          setQuery(transcript);
+        };
+
+        recognitionRef.current = recognition;
+      }
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (!recognitionRef.current) {
+      alert('Speech Recognition is not supported in this browser. Please use Chrome or Safari.');
+      return;
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop();
+    } else {
+      try {
+        recognitionRef.current.start();
+      } catch (e) {
+        console.error('Speech recognition start failed:', e);
+      }
+    }
+  };
 
   const presets = [
     'Bitcoin Spot ETF Inflows & Macro Liquidity Cycle 2026',
@@ -124,18 +175,42 @@ export function StartResearchModal({
         {!isRunning ? (
           <form onSubmit={handleStartResearch} className="space-y-4 pt-2">
             <div className="space-y-2">
-              <label className="text-xs font-medium text-foreground">
-                Research Topic or Asset Query
-              </label>
-              <div className="relative">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-medium text-foreground">
+                  Research Topic or Asset Query
+                </label>
+                {isListening && (
+                  <Badge variant="destructive" className="text-[10px] animate-pulse font-mono flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping" /> Listening to voice...
+                  </Badge>
+                )}
+              </div>
+              <div className="relative flex items-center">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="e.g. Bitcoin ETF Inflows vs Layer-1 Fee Velocity..."
-                  className="pl-9 text-xs font-mono h-10"
+                  className="pl-9 pr-12 text-xs font-mono h-10"
                   autoFocus
                 />
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  title={isListening ? 'Stop recording voice' : 'Speak research prompt'}
+                  className={cn(
+                    'absolute right-2 p-1.5 rounded-md transition-all flex items-center justify-center',
+                    isListening
+                      ? 'bg-rose-500 text-white animate-pulse shadow-md shadow-rose-500/30'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                  )}
+                >
+                  {isListening ? (
+                    <Mic className="h-4 w-4 animate-bounce" />
+                  ) : (
+                    <Mic className="h-4 w-4 text-primary" />
+                  )}
+                </button>
               </div>
             </div>
 
