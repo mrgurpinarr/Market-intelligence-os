@@ -1,4 +1,5 @@
 import { AgentContext, AgentMessage } from '@market-intel/core';
+import { WebIntelligenceAgent } from './webAgent.js';
 import { AnalystAgent } from './analystAgent.js';
 import { BullAgent } from './bullAgent.js';
 import { BearAgent } from './bearAgent.js';
@@ -13,6 +14,7 @@ export interface WorkflowOptions {
  * Market Intelligence Multi-Agent Workflow Runner (Orchestrator)
  */
 export class MarketIntelOrchestrator {
+  private webAgent = new WebIntelligenceAgent();
   private analyst = new AnalystAgent();
   private bull = new BullAgent();
   private bear = new BearAgent();
@@ -29,8 +31,20 @@ export class MarketIntelOrchestrator {
       state: { startedAt: new Date().toISOString() },
     };
 
+    // Step 0: Real-Time Web Intelligence Agent
+    options?.onProgress?.('Web Intelligence Agent is searching live financial sources and scraping current market metrics...', {
+      id: crypto.randomUUID(),
+      sender: 'orchestrator',
+      content: `Live web discovery started: ${query}`,
+      timestamp: Date.now(),
+    });
+
+    const webMsg = await this.webAgent.run(context);
+    context.history.push(webMsg);
+    options?.onProgress?.('Web Intelligence Agent extracted live signals and market evidence.', webMsg);
+
     // Step 1: Analyst Data & Trend Ingestion
-    options?.onProgress?.('Analyst Agent is researching and extracting market dynamics...', {
+    options?.onProgress?.('Analyst Agent is synthesizing market dynamics from live and vector evidence...', {
       id: crypto.randomUUID(),
       sender: 'orchestrator',
       content: `Analysis initiated: ${query}`,

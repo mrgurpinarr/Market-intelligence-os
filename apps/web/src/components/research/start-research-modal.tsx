@@ -168,7 +168,7 @@ export function StartResearchModal({
             </DialogTitle>
           </div>
           <p className="text-xs text-muted-foreground">
-            Launches our 4-stage dialectical pipeline: Analyst ➔ Bull & Bear Theses ➔ Critic Audit ➔ Executive Report.
+            Launches our 5-stage dialectical pipeline: Web Intel Agent ➔ Senior Analyst ➔ Bull & Bear Theses ➔ Critic Audit ➔ Executive Report.
           </p>
         </DialogHeader>
 

@@ -5,10 +5,12 @@ export type AgentRole =
   | 'orchestrator'
   | 'researcher'
   | 'analyst'
+  | 'web_agent'
   | 'bull'
   | 'bear'
   | 'critic'
   | 'report_writer';
+
 
 /**
  * Ajanlar arası Mesaj Protokolü (Message Protocol)

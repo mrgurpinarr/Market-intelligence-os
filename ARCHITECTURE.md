@@ -22,6 +22,7 @@ flowchart TB
 
     subgraph Multi-Agent Orchestration Layer
         Orchestrator["MarketIntelOrchestrator"]
+        WebAgent["Web Intelligence & Scraping Agent"]
         Analyst["Senior Market Analyst Agent"]
         Bull["Bull Case Growth Specialist"]
         Bear["Bear Case Risk Specialist"]
@@ -55,9 +56,11 @@ flowchart TB
     SSE --> Orchestrator
     CMC_Proxy --> CMC
 
+    Orchestrator --> WebAgent
+    WebAgent --> WebScraper
+    WebAgent --> Embedder --> EvidenceStore
     Orchestrator --> Analyst
-    Analyst --> WebScraper
-    Analyst --> Embedder --> EvidenceStore
+    Analyst --> EvidenceStore
 
     Analyst --> Bull
     Analyst --> Bear

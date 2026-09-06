@@ -23,6 +23,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm --filter web build
 
 FROM node:20-alpine AS runner
+RUN npm install -g pnpm
 WORKDIR /app
 
 ENV NODE_ENV=production
